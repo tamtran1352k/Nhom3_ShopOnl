@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_doan/components/HomePage.dart';
-
+import 'package:flutter_doan/utils/prefs.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_doan/components/login/RegisterPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,136 +15,116 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool _hidePass = true;
-  IconData icons = Icons.visibility;
+  final _formKey = GlobalKey<FormBuilderState>();
+  bool _hidePassword = true;
+  var _icon = Icons.visibility;
+  void _doLogin() {
+    final curState = _formKey.currentState!;
+    curState.save();
+    if (curState.validate()) {
+      final formValue = curState.value;
+      if (Prefs.username.isNotEmpty && Prefs.password.isNotEmpty) {
+        if (formValue["username"] == Prefs.username &&
+            formValue["password"] == Prefs.password) {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (ctx) => HomePage()),
+              (route) => false);
+        } else {
+          const snackBar =
+              SnackBar(content: Text('Wrong username or password'));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      } else {
+        Prefs.setUsername(formValue["username"]);
+        Prefs.setPassword(formValue["password"]);
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (ctx) => HomePage()), (route) => false);
+      }
+    } else {
+      const snackBar = SnackBar(content: Text('Validation failed'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/image/image-login/login.png'),
-        ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
+    return Scaffold(
+      body: Container(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              padding: const EdgeInsets.only(left: 35, top: 130),
-              child: const Text(
-                'Welcome\nBack',
-                style: TextStyle(color: Colors.white, fontSize: 33),
-              ),
-            ),
-            SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(left: 35, right: 35),
-                      child: Column(
-                        children: [
-                          TextField(
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                labelText: 'User',
-                                hintText: "Please"),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          TextField(
-                            obscureText: _hidePass,
-                            keyboardType: TextInputType.visiblePassword,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              hintText: 'Enter pasword',
-                              labelText: 'Email',
-                              suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _hidePass = !_hidePass;
-                                      icons = _hidePass
-                                          ? Icons.visibility
-                                          : Icons.visibility_off;
-                                    });
-                                  },
-                                  icon: Icon(icons)),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Sign in',
-                                style: TextStyle(
-                                    fontSize: 27, fontWeight: FontWeight.w700),
-                              ),
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundColor: Colors.grey,
-                                child: IconButton(
-                                    color: Colors.white,
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HomePage(),
-                                        ),
-                                      );
-                                    },
-                                    icon: const Icon(
-                                      Icons.arrow_forward,
-                                    )),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegisterPage(),
-                                    ),
-                                  );
-                                },
-                                child: const Text(
-                                  'Sign Up',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    decoration: TextDecoration.none,
-                                    color: Colors.red,
-                                    fontSize: 25,
-                                  ),
-                                ),
-                                style: const ButtonStyle(),
-                              ),
-                            ],
-                          )
-                        ],
+            FormBuilder(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(left: 15, bottom: 100),
+                    child: const Text(
+                      'Welcome Back',
+                      style: TextStyle(color: Colors.red, fontSize: 33),
+                    ),
+                  ),
+                  FormBuilderTextField(
+                    name: "username",
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Username",
+                    ),
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(context),
+                      FormBuilderValidators.maxLength(context, 70),
+                    ]),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  FormBuilderTextField(
+                    name: "password",
+                    obscureText: _hidePassword,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: "Password",
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _hidePassword = !_hidePassword;
+                            _icon = _hidePassword
+                                ? Icons.visibility
+                                : Icons.visibility_off;
+                          });
+                        },
+                        icon: Icon(_icon),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(context),
+                      FormBuilderValidators.minLength(context, 5),
+                    ]),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ElevatedButton(
+                    onPressed: _doLogin,
+                    child: const Text('Login'),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RegisterPage()));
+                    },
+                    child: const Text('Register'),
+                  ),
+                ],
               ),
             ),
           ],

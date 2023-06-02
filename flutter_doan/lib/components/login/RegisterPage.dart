@@ -1,10 +1,9 @@
 // ignore_for_file: file_names, sort_child_properties_last
 
 import 'package:flutter/material.dart';
-import 'package:flutter_doan/components/login/LoginPage.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -13,13 +12,15 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   bool _hidePass = true;
   IconData icons = Icons.visibility;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/image/image-login/register.png'),
-            fit: BoxFit.cover),
+          image: AssetImage('assets/image/image-login/register.png'),
+          fit: BoxFit.cover,
+        ),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -39,7 +40,8 @@ class _RegisterPageState extends State<RegisterPage> {
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.28),
+                  top: MediaQuery.of(context).size.height * 0.28,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -50,11 +52,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           TextField(
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                labelText: 'Name',
-                                hintText: "Please"),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              labelText: 'Name',
+                              hintText: 'Please',
+                            ),
                           ),
                           const SizedBox(
                             height: 30,
@@ -62,34 +65,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           TextField(
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                labelText: 'User',
-                                hintText: "Please"),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          TextField(
-                            obscureText: _hidePass,
-                            keyboardType: TextInputType.visiblePassword,
-                            decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              hintText: 'Enter pasword',
-                              labelText: 'Pasword',
-                              suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _hidePass = !_hidePass;
-                                      icons = _hidePass
-                                          ? Icons.visibility
-                                          : Icons.visibility_off;
-                                    });
-                                  },
-                                  icon: Icon(icons)),
+                              labelText: 'User',
+                              hintText: 'Please',
                             ),
                           ),
                           const SizedBox(
@@ -102,18 +82,44 @@ class _RegisterPageState extends State<RegisterPage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              hintText: 'Enter pasword',
-                              labelText: 'Pasword cofix',
+                              hintText: 'Enter password',
+                              labelText: 'Password',
                               suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _hidePass = !_hidePass;
-                                      icons = _hidePass
-                                          ? Icons.visibility
-                                          : Icons.visibility_off;
-                                    });
-                                  },
-                                  icon: Icon(icons)),
+                                onPressed: () {
+                                  setState(() {
+                                    _hidePass = !_hidePass;
+                                    icons = _hidePass
+                                        ? Icons.visibility
+                                        : Icons.visibility_off;
+                                  });
+                                },
+                                icon: Icon(icons),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          TextField(
+                            obscureText: _hidePass,
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              hintText: 'Confirm password',
+                              labelText: 'Confirm Password',
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _hidePass = !_hidePass;
+                                    icons = _hidePass
+                                        ? Icons.visibility
+                                        : Icons.visibility_off;
+                                  });
+                                },
+                                icon: Icon(icons),
+                              ),
                             ),
                           ),
                           const SizedBox(
@@ -125,20 +131,20 @@ class _RegisterPageState extends State<RegisterPage> {
                               const Text(
                                 'Sign Up',
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 27,
-                                    fontWeight: FontWeight.w700),
+                                  color: Colors.white,
+                                  fontSize: 27,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                               CircleAvatar(
                                 radius: 30,
                                 backgroundColor: Colors.grey,
                                 child: IconButton(
-                                    color: Colors.white,
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.arrow_forward,
-                                    )),
-                              )
+                                  color: Colors.white,
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.arrow_forward),
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(
@@ -146,7 +152,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

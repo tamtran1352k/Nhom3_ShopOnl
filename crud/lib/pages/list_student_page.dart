@@ -17,14 +17,14 @@ class _ListStudentPageState extends State<ListStudentPage> {
       FirebaseFirestore.instance.collection('students').snapshots();
   CollectionReference students =
       FirebaseFirestore.instance.collection('students');
-  // Future<void> deleteUser(id) {
-  //   // print("User Deleted $id");
-  //   return students
-  //       .doc(id)
-  //       .delete()
-  //       .then((value) => print('User Deleted'))
-  //       .catchError((error) => print('Failed to Delete user: $error'));
-  // }
+  Future<void> deleteUser(id) {
+    // print("User Deleted $id");
+    return students
+        .doc(id)
+        .delete()
+        .then((value) => print('User Deleted'))
+        .catchError((error) => print('Failed to Delete user: $error'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,13 +127,13 @@ class _ListStudentPageState extends State<ListStudentPage> {
                           children: [
                             IconButton(
                               onPressed: () => {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => UpdateStudentPage(
-                                //         id: storedocs[i]['id']),
-                                //   ),
-                                // )
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => UpdateStudentPage(
+                                        id: storedocs[i]['id']),
+                                  ),
+                                )
                               },
                               icon: const Icon(
                                 Icons.edit,
@@ -141,8 +141,7 @@ class _ListStudentPageState extends State<ListStudentPage> {
                               ),
                             ),
                             IconButton(
-                              // onPressed: () => {deleteUser(storedocs[i]['id'])},
-                              onPressed: () {},
+                              onPressed: () => {deleteUser(storedocs[i]['id'])},
                               icon: const Icon(
                                 Icons.delete,
                                 color: Colors.red,

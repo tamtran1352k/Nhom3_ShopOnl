@@ -1,60 +1,60 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/product_model.dart';
+import 'package:flutter_application_1/pages/Search_item.dart';
 
-class Search extends StatelessWidget {
-  const Search({super.key});
+enum SearchCharacter { lowToHigh, highToLow, alphabetically }
+
+class Search extends StatefulWidget {
+  // final List<ProductModel> search;
+  // const Search({required this.search});
 
   @override
+  State<Search> createState() => _SearchState();
+}
+
+class _SearchState extends State<Search> {
+  SearchCharacter _character = SearchCharacter.alphabetically;
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 10,
-        horizontal: 15,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Search"),
       ),
-      child: Container(
-        width: double.infinity,
-        height: 50,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 10,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text("Items"),
           ),
-          child: Row(
-            children: [
-              const Icon(
-                Icons.search,
-                size: 30,
-              ),
-              SizedBox(
-                height: 50,
-                width: 300,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                  ),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: "Search products",
-                      border: InputBorder.none,
-                    ),
-                  ),
+          Container(
+            height: 50,
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child: TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
                 ),
+                fillColor: Colors.grey[300],
+                filled: true,
+                hintText: "Search",
+                suffixIcon: Icon(Icons.search),
               ),
-            ],
+            ),
           ),
-        ),
+          SizedBox(
+            height: 10,
+          ),
+          Column(),
+          SearchItem(
+            isBool: false,
+          ),
+          SearchItem(
+            isBool: false,
+          ),
+          SearchItem(
+            isBool: false,
+          ),
+        ],
       ),
     );
   }

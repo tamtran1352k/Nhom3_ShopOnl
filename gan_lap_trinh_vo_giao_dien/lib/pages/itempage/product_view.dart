@@ -28,7 +28,7 @@ class _ProductViewState extends State<ProductView> {
         padding: const EdgeInsets.only(top: 5),
         child: ListView(
           children: [
-            const HeaderWidget(),
+            HeaderWidget(),
             Padding(
               padding: const EdgeInsets.only(top: 5, left: 20),
               child: Row(

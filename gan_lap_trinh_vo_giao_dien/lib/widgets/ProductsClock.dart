@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/Search.dart';
 import 'package:flutter_application_1/pages/itempage/product_view.dart';
 import 'package:flutter_application_1/provider/product_provider.dart';
 import 'package:provider/provider.dart';
@@ -35,19 +36,17 @@ class _ProductClockState extends State<ProductClock> {
                 "Product Clock",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
-              GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => Search(),
-                  //   ),
-                  // );
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          Search(search: productProvider.getProductDataList),
+                    ),
+                  );
                 },
-                child: Text(
-                  "View all",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-                ),
+                icon: Icon(Icons.search),
               ),
             ],
           ),

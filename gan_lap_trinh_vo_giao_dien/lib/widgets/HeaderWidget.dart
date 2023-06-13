@@ -1,12 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/Cart.dart';
 
-class HeaderWidget extends StatelessWidget {
-  const HeaderWidget({super.key});
+import 'package:flutter_application_1/pages/Search.dart';
+import 'package:flutter_application_1/provider/product_provider.dart';
+import 'package:provider/provider.dart';
+
+class HeaderWidget extends StatefulWidget {
+  HeaderWidget({super.key});
+
+  @override
+  State<HeaderWidget> createState() => _HeaderWidgetState();
+}
+
+class _HeaderWidgetState extends State<HeaderWidget> {
+  late ProductProvider productProvider;
 
   @override
   Widget build(BuildContext context) {
+    productProvider = Provider.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 15,
@@ -40,7 +51,9 @@ class HeaderWidget extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const Cart(),
+                  builder: (context) => Search(
+                    search: productProvider.getAllSearch,
+                  ),
                 ),
               );
             },
@@ -57,7 +70,7 @@ class HeaderWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const Icon(CupertinoIcons.shopping_cart),
+              child: const Icon(CupertinoIcons.search),
             ),
           ),
         ],

@@ -6,6 +6,7 @@ import 'package:flutter_application_1/pages/Search.dart';
 import 'package:flutter_application_1/user/Drawers.dart';
 
 import 'package:flutter_application_1/widgets/HeaderWidget.dart';
+import 'package:flutter_application_1/widgets/ProductShoe.dart';
 
 import 'package:flutter_application_1/widgets/Product_T-shirt.dart';
 import 'package:flutter_application_1/widgets/ProductsClock.dart';
@@ -24,13 +25,14 @@ class roleUser extends StatelessWidget {
     return Scaffold(
       drawer: const Drawers(),
       body: ListView(
-        children: const [
+        children: [
           HeaderWidget(),
 
           //Products
 
           ProductClock(),
           ProductTShirt(),
+          ProductShoe(),
 
           //Best rated item
           // BestRatedItem(),

@@ -6,6 +6,7 @@ import 'package:flutter_application_1/user/Drawers.dart';
 import 'package:flutter_application_1/pages/Search.dart';
 
 import 'package:flutter_application_1/widgets/HeaderWidget.dart';
+import 'package:flutter_application_1/widgets/ProductShoe.dart';
 
 import 'package:flutter_application_1/widgets/Product_T-shirt.dart';
 import 'package:flutter_application_1/widgets/ProductsClock.dart';
@@ -22,15 +23,19 @@ class _HomeAdminState extends State<HomeAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const DrawersAdmin(),
-      body: ListView(
-        children: const [
-          HeaderWidget(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView(
+          children: [
+            HeaderWidget(),
 
-          //Products
+            //Products
 
-          ProductClock(),
-          ProductTShirt(),
-        ],
+            ProductClock(),
+            ProductTShirt(),
+            ProductShoe(),
+          ],
+        ),
       ),
     );
   }

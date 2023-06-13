@@ -5,6 +5,7 @@ import 'package:flutter_application_1/crud/home_page.dart';
 
 import 'package:flutter_application_1/firebase_options.dart';
 import 'package:flutter_application_1/home_page.dart';
+import 'package:flutter_application_1/pages/Search.dart';
 import 'package:flutter_application_1/provider/product_provider.dart';
 
 import 'package:flutter_application_1/search.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: HomeAdmin(),
+        home: AuthPage(),
       ),
     );
   }

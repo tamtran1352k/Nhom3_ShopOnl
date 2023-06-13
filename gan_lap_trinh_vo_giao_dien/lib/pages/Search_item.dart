@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/itempage/product_view.dart';
 
 class SearchItem extends StatelessWidget {
   bool isBool = false;
-
-  SearchItem({required this.isBool});
+  String productImage;
+  String productName;
+  int productPrice;
+  SearchItem(
+      {required this.isBool,
+      required this.productImage,
+      required this.productName,
+      required this.productPrice});
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +21,28 @@ class SearchItem extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: Container(
-                  height: 100,
-                  child: Center(
-                    child: Image.network(
-                        "https://images.squarespace-cdn.com/content/v1/5b35b18af93fd4d75e591f4a/1543985895500-98LX8K027J1RWKQWFGAH/HS-Website---Vegetable-Products.jpg?format=2500w"),
-                  ),
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductView(
+                                productImage: productImage,
+                                productName: productName,
+                                productPrice: productPrice),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 100,
+                        child: Center(
+                          child: Image.network(productImage),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Expanded(
@@ -29,55 +52,24 @@ class SearchItem extends StatelessWidget {
                     mainAxisAlignment: isBool == false
                         ? MainAxisAlignment.spaceAround
                         : MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Column(
                         children: [
                           Text(
-                            "Name",
+                            productName,
                             style: TextStyle(
                                 color: Colors.black54,
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            "50\$/50 gram",
+                            "$productPrice\$",
                             style: TextStyle(
                                 color: Colors.black54,
                                 fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
-                      isBool == false
-                          ? Container(
-                              margin: EdgeInsets.only(right: 15),
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              height: 35,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "50gram",
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Icon(
-                                      Icons.arrow_drop_down,
-                                      size: 20,
-                                      color: Colors.white70,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Text("50gram")
                     ],
                   ),
                 ),

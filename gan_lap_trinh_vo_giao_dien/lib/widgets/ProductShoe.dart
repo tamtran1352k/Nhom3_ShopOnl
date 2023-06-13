@@ -4,19 +4,19 @@ import 'package:flutter_application_1/pages/itempage/product_view.dart';
 import 'package:flutter_application_1/provider/product_provider.dart';
 import 'package:provider/provider.dart';
 
-class ProductTShirt extends StatefulWidget {
-  const ProductTShirt({super.key});
+class ProductShoe extends StatefulWidget {
+  const ProductShoe({super.key});
 
   @override
-  State<ProductTShirt> createState() => _ProductTShirtState();
+  State<ProductShoe> createState() => _ProductShoeState();
 }
 
-class _ProductTShirtState extends State<ProductTShirt> {
+class _ProductShoeState extends State<ProductShoe> {
   late ProductProvider productProvider;
   @override
   void initState() {
     ProductProvider productProvider = Provider.of(context, listen: false);
-    productProvider.fatchProductTshirtList();
+    productProvider.fatchProductShoeList();
 
     super.initState();
   }
@@ -33,7 +33,7 @@ class _ProductTShirtState extends State<ProductTShirt> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Product T-Shirt",
+                "Product Shoe",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
               IconButton(
@@ -42,7 +42,7 @@ class _ProductTShirtState extends State<ProductTShirt> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          Search(search: productProvider.getProductTshirtList),
+                          Search(search: productProvider.getProductShoeList),
                     ),
                   );
                 },
@@ -59,8 +59,8 @@ class _ProductTShirtState extends State<ProductTShirt> {
               horizontal: 5,
             ),
             child: Row(
-              children: productProvider.getProductTshirtList.map(
-                (productTshirtData) {
+              children: productProvider.getProductShoeList.map(
+                (productShoe) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 7),
                     child: Container(
@@ -89,12 +89,9 @@ class _ProductTShirtState extends State<ProductTShirt> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ProductView(
-                                      productImage:
-                                          productTshirtData.productImage,
-                                      productName:
-                                          productTshirtData.productName,
-                                      productPrice:
-                                          productTshirtData.productPrice,
+                                      productImage: productShoe.productImage,
+                                      productName: productShoe.productName,
+                                      productPrice: productShoe.productPrice,
                                     ),
                                   ),
                                 );
@@ -102,7 +99,7 @@ class _ProductTShirtState extends State<ProductTShirt> {
                               child: Container(
                                 alignment: Alignment.center,
                                 child: Image.network(
-                                  productTshirtData.productImage,
+                                  productShoe.productImage,
                                   height: 130,
                                 ),
                               ),
@@ -111,7 +108,7 @@ class _ProductTShirtState extends State<ProductTShirt> {
                               height: 4,
                             ),
                             Text(
-                              productTshirtData.productName,
+                              productShoe.productName,
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -123,7 +120,7 @@ class _ProductTShirtState extends State<ProductTShirt> {
                             Row(
                               children: [
                                 Text(
-                                  "\$ ${productTshirtData.productPrice}",
+                                  "\$ ${productShoe.productPrice}",
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,

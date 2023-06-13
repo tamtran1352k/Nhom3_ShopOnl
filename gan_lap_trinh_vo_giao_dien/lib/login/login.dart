@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/admin/registeradmin.dart';
 import 'package:flutter_application_1/crud/home_page.dart';
 import 'package:flutter_application_1/home_page.dart';
+
 import 'package:flutter_application_1/main.dart';
 
 import 'package:flutter_application_1/user/register.dart';
@@ -66,22 +67,27 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              padding: const EdgeInsets.only(left: 35, top: 130),
-              child: const Text(
-                'Welcome Back',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 33,
-                ),
-              ),
+            SizedBox(
+              height: 50,
             ),
-            SizedBox(height: 16.0),
+            Icon(
+              Icons.lock,
+              size: 100,
+            ),
+            SizedBox(height: 50),
+            Text(
+              "Wellcome back you\'ve been missed!",
+              style: TextStyle(color: Colors.grey[700], fontSize: 20),
+            ),
+            SizedBox(
+              height: 25,
+            ),
             TextFormField(
               controller: _emailController,
               decoration: InputDecoration(
@@ -91,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            SizedBox(height: 25),
             TextFormField(
               controller: _passwordController,
               decoration: InputDecoration(

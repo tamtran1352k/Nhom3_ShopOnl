@@ -71,13 +71,24 @@ class _RegisterAdminState extends State<RegisterAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Register Admin'),
-      ),
+      backgroundColor: Colors.grey[300],
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Icon(
+              Icons.lock,
+              size: 100,
+            ),
+            SizedBox(height: 50),
+            Text(
+              "Let's create an accout for you",
+              style: TextStyle(color: Colors.grey[700], fontSize: 20),
+            ),
+            SizedBox(
+              height: 15,
+            ),
             TextField(
               controller: _emailController,
               decoration: const InputDecoration(
@@ -120,7 +131,26 @@ class _RegisterAdminState extends State<RegisterAdmin> {
             ),
             ElevatedButton(
               onPressed: _registerAdmin,
-              child: const Text('Register Admin'),
+              child: const Text(
+                'Register Admin',
+                style: TextStyle(fontSize: 24),
+              ),
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
+                );
+              },
+              icon: Icon(Icons.login),
             ),
             Opacity(
               opacity: 0.0,

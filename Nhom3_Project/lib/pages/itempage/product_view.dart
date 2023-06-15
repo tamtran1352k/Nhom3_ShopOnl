@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/admin/DrawersAdmin.dart';
-import 'package:flutter_application_1/pages/Count.dart';
-import 'package:flutter_application_1/widgets/ItemBottom.dart';
+import 'package:flutter_application_1/pages/Cart.dart';
 
-import '../../widgets/HeaderWidget.dart';
+import 'package:flutter_application_1/provider/product_provider.dart';
+
+import 'package:provider/provider.dart';
 
 class ProductView extends StatefulWidget {
-  String productImage;
-  String productName;
-  int productPrice;
+  final String productImage;
+  final String productName;
+  final int productPrice;
 
   ProductView({
     required this.productImage,
@@ -22,47 +23,12 @@ class ProductView extends StatefulWidget {
 }
 
 class _ProductViewState extends State<ProductView> {
+  late ProductProvider productProvider;
   int countValue = 1;
-
-  void _incrementCount() {
-    setState(() {
-      countValue++;
-    });
-  }
-
-  void _decrementCount() {
-    setState(() {
-      if (countValue > 0) {
-        countValue--;
-      } else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Error"),
-              content: Text("Count cannot be less than zero."),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("OK"),
-                ),
-              ],
-            );
-          },
-        );
-      }
-    });
-  }
-
-  int getTotalPrice() {
-    return widget.productPrice * countValue;
-  }
 
   @override
   Widget build(BuildContext context) {
-    int totalPrice = getTotalPrice();
+    productProvider = Provider.of<ProductProvider>(context);
 
     return Scaffold(
       drawer: DrawersAdmin(),
@@ -70,7 +36,6 @@ class _ProductViewState extends State<ProductView> {
         padding: const EdgeInsets.only(top: 5),
         child: ListView(
           children: [
-            HeaderWidget(),
             Padding(
               padding: const EdgeInsets.only(top: 5, left: 20),
               child: Row(
@@ -122,27 +87,6 @@ class _ProductViewState extends State<ProductView> {
                           ],
                         ),
                       ),
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: _decrementCount,
-                            icon: Icon(Icons.remove),
-                            color: Colors.blue,
-                          ),
-                          Text(
-                            countValue.toString(),
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: _incrementCount,
-                            icon: Icon(Icons.add),
-                            color: Colors.blue,
-                          ),
-                        ],
-                      ),
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 12),
                         child: Text(
@@ -153,29 +97,6 @@ class _ProductViewState extends State<ProductView> {
                           ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            "Total:",
-                            style: TextStyle(
-                              color: Colors.blueAccent,
-                              fontSize: 19,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            "\$ $totalPrice",
-                            style: TextStyle(
-                              color: Colors.blueAccent,
-                              fontSize: 19,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ),
@@ -184,7 +105,53 @@ class _ProductViewState extends State<ProductView> {
           ],
         ),
       ),
-      bottomNavigationBar: const ItemBottom(),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          height: 70,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "\$ ${widget.productPrice}",
+                    style: TextStyle(
+                      color: Colors.blueAccent,
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                ],
+              ),
+              GestureDetector(
+                  onTap: () {
+                    productProvider.getCartData(
+                      productName: widget.productName,
+                      productImage: widget.productImage,
+                      productPrice: widget.productPrice,
+                      productQuantity: countValue,
+                    );
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Cart(),
+                      ),
+                    );
+                  },
+                  child: const Icon(
+                    CupertinoIcons.shopping_cart,
+                    size: 30,
+                  )),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

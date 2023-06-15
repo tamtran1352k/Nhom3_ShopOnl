@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/cart_model.dart';
 
 import 'package:flutter_application_1/model/product_model.dart';
 
@@ -17,6 +18,38 @@ class ProductProvider with ChangeNotifier {
     seach.add(_productModel);
   }
 
+  List<CartModel> cartModelList = [];
+  late CartModel cartModel;
+
+  void getCartData(
+      {required String productName,
+      required String productImage,
+      required int productPrice,
+      required int productQuantity}) {
+    cartModel = CartModel(
+      productName: productName,
+      productImage: productImage,
+      productPrice: productPrice,
+      productQuantity: productQuantity,
+    );
+    cartModelList.add(cartModel);
+  }
+
+  List<CartModel> get getCartModelList {
+    return List.from(cartModelList);
+  }
+
+  int get getCartModelListLength {
+    return cartModelList.length;
+  }
+
+  ///////Delete Product
+  void deleteProduct(int index) {
+    cartModelList.removeAt(index);
+    notifyListeners();
+  }
+
+  /////////Product Clock
   List<ProductModel> productList = [];
   fatchProductData() async {
     List<ProductModel> newList = [];
@@ -35,26 +68,6 @@ class ProductProvider with ChangeNotifier {
 
   List<ProductModel> get getProductDataList {
     return productList;
-  }
-
-  ////////////////ProductT-Shirt
-  List<ProductModel> productTshirtList = [];
-  fatchProductTshirtList() async {
-    List<ProductModel> newList = [];
-    QuerySnapshot value =
-        await FirebaseFirestore.instance.collection("producttshirt").get();
-    value.docs.forEach(
-      (element) {
-        productModels(element);
-        newList.add(_productModel);
-      },
-    );
-    productTshirtList = newList;
-    notifyListeners();
-  }
-
-  List<ProductModel> get getProductTshirtList {
-    return productTshirtList;
   }
 
   ////////Product Shoe

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/home_page.dart';
 import 'package:flutter_application_1/login/login.dart';
-import 'package:flutter_application_1/search.dart';
 
 class Addlist extends StatefulWidget {
   const Addlist({Key? key}) : super(key: key);

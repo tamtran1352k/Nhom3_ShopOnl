@@ -8,18 +8,28 @@ class Cart extends StatefulWidget {
   State<Cart> createState() => _CartState();
 }
 
-late ProductProvider productProvider;
-
 class _CartState extends State<Cart> {
+  double calculateTotalPrice(ProductProvider productProvider) {
+    double totalPrice = 0.0;
+    for (var cartItem in productProvider.getCartModelList) {
+      if (cartItem.productQuantity > 0) {
+        totalPrice += cartItem.productPrice * cartItem.productQuantity;
+      }
+    }
+    return totalPrice;
+  }
+
   @override
   Widget build(BuildContext context) {
-    productProvider = Provider.of<ProductProvider>(context);
+    final productProvider = Provider.of<ProductProvider>(context);
+    double totalPrice =
+        calculateTotalPrice(productProvider); // Update this line
+
     return Scaffold(
       bottomNavigationBar: Container(
         height: 60,
         padding: EdgeInsets.only(bottom: 10),
         margin: EdgeInsets.symmetric(horizontal: 10),
-        width: 100,
         child: MaterialButton(
           onPressed: () {},
           child: Text(
@@ -56,16 +66,32 @@ class _CartState extends State<Cart> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: productProvider.getCartModelListLength,
-        itemBuilder: (context, index) => CartProduct(
-          index: index,
-          productImage: productProvider.getCartModelList[index].productImage,
-          productName: productProvider.getCartModelList[index].productName,
-          productPrice: productProvider.getCartModelList[index].productPrice,
-          productQuantity:
-              productProvider.getCartModelList[index].productQuantity,
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: productProvider.getCartModelListLength,
+              itemBuilder: (context, index) => CartProduct(
+                index: index,
+                productImage:
+                    productProvider.getCartModelList[index].productImage,
+                productName:
+                    productProvider.getCartModelList[index].productName,
+                productPrice:
+                    productProvider.getCartModelList[index].productPrice,
+                productQuantity:
+                    productProvider.getCartModelList[index].productQuantity,
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              'Total: \$${totalPrice.toStringAsFixed(2)})',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
       ),
     );
   }

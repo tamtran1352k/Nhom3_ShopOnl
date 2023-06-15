@@ -10,6 +10,7 @@ import 'package:flutter_application_1/pages/Search.dart';
 import 'package:flutter_application_1/provider/product_provider.dart';
 
 import 'package:flutter_application_1/user/Drawers.dart';
+import 'package:flutter_application_1/user/user.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: HomeAdmin(),
+        home: AuthPage(),
       ),
     );
   }
